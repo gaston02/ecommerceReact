@@ -2,3 +2,8 @@
     width: 260px;
     height: calc(100vh - 100px);
 }
+
+.image-prodct-detail {
+    width: 200px;
+    height: 200px;
+}
