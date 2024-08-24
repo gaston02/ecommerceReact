@@ -10,6 +10,11 @@ const Card = (data) => {
     context.setProductToShow(productDetail);
   };
 
+  const addProductsToCart = (event, productData) => {
+    event.stopPropagation();
+    context.addProductToCart(productData);
+  };
+
   const truncateText = (text, maxLength) => {
     if (!text) return "";
     return text.length > maxLength
@@ -33,7 +38,7 @@ const Card = (data) => {
         ></img>
         <div
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={() => context.setCount(context.count + 1)}
+          onClick={(event) => addProductsToCart(event, data.data)}
         >
           <div>
             <PlusIcon className="size-6 text-black"></PlusIcon>
@@ -41,7 +46,9 @@ const Card = (data) => {
         </div>
       </figure>
       <p className="flex justify-between">
-        <span className="text-sm font-light">{truncateText(data.data.title, 50)}</span>
+        <span className="text-sm font-light">
+          {truncateText(data.data.title, 50)}
+        </span>
         <span className="text-lg font-medium">${data.data.price}</span>
       </p>
     </div>
