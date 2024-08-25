@@ -1,13 +1,18 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { totalPriceCart } from "../util";
 
 export const ShoppingCartContext = createContext();
 
 export const ShoppingCartProvider = ({ children }) => {
   // ShoppingCart . Quantity
   const [count, setCount] = useState(0);
+
   // ShoppingCart . AddProductsToCart
   const [cartProducts, setCartProducts] = useState([]);
+
+  // ShoppingCart . TotalPrice
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // ProductDetail . Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
@@ -42,22 +47,35 @@ export const ShoppingCartProvider = ({ children }) => {
         return [...prevProducts, { ...product, quantity: 1 }];
       }
     });
+
+    // Recalculate the total price every time a product is added
+    setTotalPrice((prevProducts) => totalPriceCart(prevProducts));
     openCheckoutSideMenu();
   };
 
   // Update product quantity
   const updateProductQuantity = (id, quantity) => {
     setCartProducts((prevProducts) => {
-      return prevProducts.map((product) =>
+      const updatedProducts = prevProducts.map((product) =>
         product.id === id ? { ...product, quantity } : product
       );
+
+      // Recalculate the total price when the quantity is updated
+      setTotalPrice(totalPriceCart(updatedProducts));
+      return updatedProducts;
     });
   };
 
   // Remove product from cart
   const removeProductFromCart = (id) => {
     setCartProducts((prevProducts) => {
-      return prevProducts.filter((product) => product.id !== id);
+      const updatedProducts = prevProducts.filter(
+        (product) => product.id !== id
+      );
+
+      // Recalculate the total price when a product is removed
+      setTotalPrice(totalPriceCart(updatedProducts));
+      return updatedProducts;
     });
   };
 
@@ -68,6 +86,9 @@ export const ShoppingCartProvider = ({ children }) => {
       0
     );
     setCount(totalCount);
+
+    // Recalculate the total price when the cart changes
+    setTotalPrice(totalPriceCart(cartProducts));
   }, [cartProducts]);
 
   return (
@@ -87,6 +108,7 @@ export const ShoppingCartProvider = ({ children }) => {
         isCheckoutSideMenuOpen,
         openCheckoutSideMenu,
         closeCheckoutSideMenu,
+        totalPrice,
       }}
     >
       {children}

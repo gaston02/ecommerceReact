@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const OrderCard = (props) => {
-  const { title, imageUrl, price, quantity, onQuantityChange, onRemove } = props;
+  const { title, imageUrl, price, quantity, onQuantityChange, onRemove } =
+    props;
 
   // Calculate total price based on quantity
   const totalPrice = (price * quantity).toFixed(2);
@@ -18,7 +19,7 @@ const OrderCard = (props) => {
   };
 
   return (
-    <div className="flex justify-between items-center mb-2">
+    <div className="flex justify-between items-center mb-4">
       <div className="flex item-center gap-2">
         <figure className="w-20 h-20">
           <img
@@ -30,7 +31,8 @@ const OrderCard = (props) => {
         <p className="text-sm font-light">{title}</p>
       </div>
       <div className="flex item-center gap-2">
-        <p className="text-lg font-medium">${totalPrice}</p> {/* Display total price */}
+        <p className="text-lg font-medium">${totalPrice}</p>
+        {/* Display total price */}
         <div className="flex items-center gap-2">
           <button onClick={decreaseQuantity}>-</button>
           <span>{quantity}</span>
@@ -56,4 +58,3 @@ OrderCard.propTypes = {
 };
 
 export default OrderCard;
-
