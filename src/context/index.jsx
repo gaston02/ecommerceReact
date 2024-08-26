@@ -27,6 +27,9 @@ export const ShoppingCartProvider = ({ children }) => {
   // ProductDetail . ProductShow
   const [productToShow, setProductToShow] = useState({});
 
+  // OrdersProducts . OrderProduct
+  const [order, setOrder] = useState([])
+
   // Add product to cart
   const addProductToCart = (product) => {
     setCartProducts((prevProducts) => {
@@ -102,6 +105,7 @@ export const ShoppingCartProvider = ({ children }) => {
         productToShow,
         setProductToShow,
         cartProducts,
+        setCartProducts,
         addProductToCart,
         updateProductQuantity,
         removeProductFromCart,
@@ -109,6 +113,8 @@ export const ShoppingCartProvider = ({ children }) => {
         openCheckoutSideMenu,
         closeCheckoutSideMenu,
         totalPrice,
+        order,
+        setOrder
       }}
     >
       {children}

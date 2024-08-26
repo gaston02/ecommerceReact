@@ -10,8 +10,6 @@ import NavBar from "../../components/navbar/index";
 import CheckoutSideMenu from "../../components/checkoutSideMenu";
 import "./App.css";
 
-
-
 const AppRoutes = () => {
   let routes = useRoutes([
     {
@@ -24,6 +22,10 @@ const AppRoutes = () => {
     },
     {
       path: "/my-order",
+      element: <MyOrder />,
+    },
+    {
+      path: "/my-order/last",
       element: <MyOrder />,
     },
     {
