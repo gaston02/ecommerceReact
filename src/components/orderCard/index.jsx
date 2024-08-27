@@ -10,10 +10,11 @@ const OrderCard = (props) => {
     onQuantityChange,
     onRemove,
     showQuantityControls,
+    showQuantityInTitle, // New prop to control quantity in title
   } = props;
 
+  // Render the XMarkIcon if the onRemove function is provided
   let renderXMarkIcon;
-
   if (onRemove) {
     renderXMarkIcon = (
       <XMarkIcon
@@ -26,6 +27,7 @@ const OrderCard = (props) => {
   // Calculate total price based on quantity
   const totalPrice = parseFloat((price * quantity).toFixed(2));
 
+  // Handlers for increasing and decreasing the quantity
   const increaseQuantity = () => {
     onQuantityChange(quantity + 1);
   };
@@ -38,7 +40,7 @@ const OrderCard = (props) => {
 
   return (
     <div className="flex justify-between items-center mb-4">
-      <div className="flex item-center gap-2">
+      <div className="flex items-center gap-2">
         <figure className="w-20 h-20">
           <img
             className="w-full h-full rounded-lg object-cover"
@@ -46,9 +48,15 @@ const OrderCard = (props) => {
             alt={title}
           />
         </figure>
-        <p className="text-sm font-light">{title}</p>
+        {/* Conditionally render title with quantity */}
+        <p className="text-sm font-light">
+          {title}
+          {showQuantityInTitle && (
+            <span className="font-bold ml-1">x{quantity}</span>
+          )}
+        </p>
       </div>
-      <div className="flex item-center gap-2">
+      <div className="flex items-center gap-2">
         <p className="text-lg font-medium">${totalPrice}</p>
         {/* Display total price */}
         {showQuantityControls && (
@@ -70,14 +78,16 @@ OrderCard.propTypes = {
   imageUrl: PropTypes.string.isRequired,
   price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   quantity: PropTypes.number.isRequired,
-  onQuantityChange: PropTypes.func, // Modified to optional for cases without quantity controls
-  onRemove: PropTypes.func, // Modified to optional for cases without remove functionality
-  showQuantityControls: PropTypes.bool, // New prop to control the visibility of quantity controls
+  onQuantityChange: PropTypes.func,
+  onRemove: PropTypes.func,
+  showQuantityControls: PropTypes.bool,
+  showQuantityInTitle: PropTypes.bool, // New prop for showing quantity in title
 };
 
 // Set default props
 OrderCard.defaultProps = {
-  showQuantityControls: true, // Default to true to maintain current behavior
+  showQuantityControls: true,
+  showQuantityInTitle: false, // Default to false to maintain current behavior
 };
 
 export default OrderCard;
