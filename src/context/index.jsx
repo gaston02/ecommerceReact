@@ -28,7 +28,14 @@ export const ShoppingCartProvider = ({ children }) => {
   const [productToShow, setProductToShow] = useState({});
 
   // OrdersProducts . OrderProduct
-  const [order, setOrder] = useState([])
+  const [order, setOrder] = useState([]);
+
+  // Get Products
+  const [items, setItems] = useState(null);
+  const [FilterItems, setFilterItems] = useState(null);
+
+  // Get Products . byTitle
+  const [searchByTitle, setSearchByTitle] = useState(null);
 
   // Add product to cart
   const addProductToCart = (product) => {
@@ -94,6 +101,25 @@ export const ShoppingCartProvider = ({ children }) => {
     setTotalPrice(totalPriceCart(cartProducts));
   }, [cartProducts]);
 
+  // Consume API with fetch
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((data) => setItems(data));
+  }, []);
+
+  const filterItemsByTitle = (items, searchByTitle) => {
+    return items?.filter((item) =>
+      item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+    );
+  };
+
+  useEffect(() => {
+    if (searchByTitle) setFilterItems(filterItemsByTitle(items, searchByTitle));
+  }, [items, searchByTitle]);
+
+  console.log("Filter items:", FilterItems);
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -114,7 +140,13 @@ export const ShoppingCartProvider = ({ children }) => {
         closeCheckoutSideMenu,
         totalPrice,
         order,
-        setOrder
+        setOrder,
+        items,
+        setItems,
+        searchByTitle,
+        setSearchByTitle,
+        FilterItems,
+        setFilterItems,
       }}
     >
       {children}

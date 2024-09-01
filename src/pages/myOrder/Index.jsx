@@ -4,6 +4,7 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { ShoppingCartContext } from "../../context";
 import Layout from "../../components/layout";
 import OrderCard from "../../components/orderCard";
+import { totalPriceCart } from "../../util";
 
 function MyOrder() {
   const context = useContext(ShoppingCartContext);
@@ -11,6 +12,12 @@ function MyOrder() {
   let index = currentPath.substring(currentPath.lastIndexOf("/") + 1);
 
   if (index === "last") index = context.order?.length - 1;
+
+  // Get the products from the current orde
+  const orderProducts = context.order?.[index].products || [];
+
+  // Calculate the totalPrice of the current order
+  const orderTotalPrice = totalPriceCart(orderProducts);
 
   return (
     <Layout>
@@ -22,17 +29,25 @@ function MyOrder() {
       </div>
 
       <div className="flex flex-col w-80 mt-2">
-        {context.order?.[index].products.map((product) => (
+        {orderProducts.map((product) => (
           <OrderCard
             key={product.id}
             title={product.title}
             imageUrl={product.image}
             price={product.price}
-            quantity={product.quantity} // Pass quantity
-            showQuantityControls={false} // Hide controls in MyOrder
-            showQuantityInTitle={true} // Show quantity in title
+            quantity={product.quantity}
+            showQuantityControls={false}
+            showQuantityInTitle={true}
           />
         ))}
+      </div>
+
+      {/* Display the totalPrice of the order */}
+      <div className="px-6 mb-6">
+        <p className="flex justify-between items-center">
+          <span className="font-medium">Total:</span>
+          <span className="font-semibold text-lg mx-2">${orderTotalPrice}</span>
+        </p>
       </div>
     </Layout>
   );
