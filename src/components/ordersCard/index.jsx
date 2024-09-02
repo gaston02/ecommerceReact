@@ -21,12 +21,12 @@ const OrdersCard = (props) => {
 };
 
 OrdersCard.propTypes = {
-  totalProducts: PropTypes.number.isRequired, // Cantidad total de productos
+  totalProducts: PropTypes.number.isRequired,
   totalPrice: PropTypes.oneOfType([
-    PropTypes.string, // Precio como cadena de texto
-    PropTypes.number, // Precio como número
+    PropTypes.string,
+    PropTypes.number,
   ]).isRequired,
-  date: PropTypes.string.isRequired, // Fecha como cadena de texto
+  date: PropTypes.string.isRequired,
 };
 
 export default OrdersCard;

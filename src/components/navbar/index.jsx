@@ -15,6 +15,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/"
+            onClick={() => context.setSearchByCategory(null)}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             All
@@ -22,45 +23,51 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to="/clothes"
+            to="men's clothing"
+            onClick={() => context.setSearchByCategory("men's clothing")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            Clothes
+            Men&#39;s clothing
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/electronic"
+            to="women's clothing"
+            onClick={() => context.setSearchByCategory("women's clothing")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            Electronic
+            Women&#39;s clothing
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/furnitures"
+            to="/jewelery"
+            onClick={() => context.setSearchByCategory("jewelery")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            Furnitures
+            Jewelery
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/toys"
+            to="/electronics"
+            onClick={() => context.setSearchByCategory("electronics")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            Toys
+            Electronics
           </NavLink>
         </li>
         <li>
           <NavLink
             to="/others"
+            onClick={() => context.setSearchByCategory("others")}
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
             Others
           </NavLink>
         </li>
       </ul>
+
       <ul className="flex items-center gap-3">
         <li className="text-black/60">gastonandres.fuentes@gmail.com</li>
         <li>
@@ -87,7 +94,9 @@ const Navbar = () => {
             Sign In
           </NavLink>
         </li>
-        <div><ShoppingBagIcon className="size-6 text-black"></ShoppingBagIcon></div>
+        <div>
+          <ShoppingBagIcon className="size-6 text-black"></ShoppingBagIcon>
+        </div>
         <li>{context.count}</li>
       </ul>
     </nav>
